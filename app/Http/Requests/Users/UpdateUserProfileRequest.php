@@ -27,8 +27,8 @@ class UpdateUserProfileRequest extends FormRequest
             'first_name'   => 'required|string',
             'last_name'    => 'required|string',
             'phone_number' => 'required|string|min:10|max:15',
-            'state'        => 'required|string|exists:states,id',
-            'city'         => 'required|string|exists:cities,id',
+            'state'        => 'required|exists:states,id',
+            'city'         => 'required|exists:cities,id',
         ];
     }
 }
