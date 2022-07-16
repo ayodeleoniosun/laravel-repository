@@ -28,13 +28,13 @@ running are as follow:
 #### Step 1: Clone the repository
 
 ```bash
-git clone https://github.com/ayodeleoniosun/laravel-template-for-repository-pattern.git
+git clone https://github.com/ayodeleoniosun/lara-repo.git
 ```
 
 #### Step 2: Switch to the repo folder
 
 ```bash
-cd laravel-template-for-repository-pattern
+cd lara-repo
 ```
 
 #### Step 3: Install all composer dependencies
