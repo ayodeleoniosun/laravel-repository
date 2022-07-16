@@ -1,4 +1,4 @@
-# Laravel Template for Repository Pattern
+# Repository pattern implementation for Laravel
 
 This repository is a boilerplate code for using repository pattern in laravel. <br/> It comprises accounts (guest)
 and authenticated user CRUD operations for example purpose.
