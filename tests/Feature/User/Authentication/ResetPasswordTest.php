@@ -86,7 +86,7 @@ test('cannot reset password with non existent token', function () {
 
 test('cannot reset password with invalid token', function () {
     $data = [
-        'email_address' => 'invalid@sellit.test',
+        'email_address' => 'invalid@boilerplate.test',
         'token'         => Str::random(60),
     ];
 

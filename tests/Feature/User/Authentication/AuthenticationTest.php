@@ -9,8 +9,8 @@ uses(RefreshDatabase::class, CreateUsers::class);
 
 test('cannot login with invalid credentials', function () {
     $data = [
-        'email_address' => 'email@sellit.test',
-        'password'      => 'email@sellit.test',
+        'email_address' => 'email@boilerplate.test',
+        'password'      => 'email@boilerplate.test',
     ];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/login', $data);

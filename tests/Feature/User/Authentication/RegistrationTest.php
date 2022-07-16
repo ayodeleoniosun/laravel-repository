@@ -11,7 +11,7 @@ test('cannot register with short password', function () {
     $data = [
         'first_name'    => 'firstname',
         'last_name'     => 'lastname',
-        'email_address' => 'email@sellit.test',
+        'email_address' => 'email@boilerplate.test',
         'phone_number'  => '08123456789',
         'password'      => '12345',
     ];
@@ -56,9 +56,9 @@ test('can register new user', function () {
     $data = [
         'first_name'    => 'firstname',
         'last_name'     => 'lastname',
-        'email_address' => 'email@sellit.test',
+        'email_address' => 'email@boilerplate.test',
         'phone_number'  => '08123456789',
-        'password'      => 'email@sellit.test',
+        'password'      => 'email@boilerplate.test',
     ];
 
     $response = $this->postJson($this->apiBaseUrl . '/accounts/register', $data);

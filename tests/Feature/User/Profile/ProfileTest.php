@@ -96,8 +96,8 @@ test('can update profile', function () {
 test('cannot update password with wrong current password', function () {
     $data = [
         'current_password'          => '12345678',
-        'new_password'              => 'password@sellit.test',
-        'new_password_confirmation' => 'password@sellit.test',
+        'new_password'              => 'password@boilerplate.test',
+        'new_password_confirmation' => 'password@boilerplate.test',
     ];
 
     $response = $this->putJson($this->apiBaseUrl . '/users/profile/update/password', $data);
@@ -137,8 +137,8 @@ test('cannot update password with non matching passwords', function () {
 test('can update password', function () {
     $data = [
         'current_password'          => 'password',
-        'new_password'              => 'password@sellit.test',
-        'new_password_confirmation' => 'password@sellit.test',
+        'new_password'              => 'password@boilerplate.test',
+        'new_password_confirmation' => 'password@boilerplate.test',
     ];
 
     $response = $this->putJson($this->apiBaseUrl . '/users/profile/update/password', $data);
