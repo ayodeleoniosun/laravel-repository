@@ -42,16 +42,6 @@ class UserController extends Controller
         );
     }
 
-    public function updateBusinessProfile(UpdateUserBusinessInformationRequest $request): JsonResponse
-    {
-        return $this->request(
-            'update-business-profile',
-            $request,
-            'Business profile successfully updated',
-            Response::HTTP_OK
-        );
-    }
-
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
         return $this->request(
@@ -82,10 +72,6 @@ class UserController extends Controller
 
                 case 'update-profile':
                     $response = $this->user->updateProfile($request->user(), $request->validated());
-                    break;
-
-                case 'update-business-profile':
-                    $response = $this->user->updateBusinessProfile($request->user(), $request->validated());
                     break;
 
                 case 'update-password':
