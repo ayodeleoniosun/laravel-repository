@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -195,6 +195,15 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //Repository Providers
+        App\Providers\Repositories\AccountRepositoryProvider::class,
+        App\Providers\Repositories\UserRepositoryProvider::class,
+        App\Providers\Repositories\PasswordResetRepositoryProvider::class,
+        App\Providers\Repositories\FileRepositoryProvider::class,
+
+        //Service Providers
+        App\Providers\Services\AccountServiceProvider::class,
+        App\Providers\Services\UserServiceProvider::class,
     ],
 
     /*
