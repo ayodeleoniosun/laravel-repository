@@ -27,6 +27,7 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware(['auth:sanctum'])->prefix('users')->group(function () {
         Route::controller(UserController::class)->group(function () {
+            Route::get('/logout', 'logout')->name('user.logout');
             Route::get('/{slug}', 'profile')->name('user.profile');
             Route::post('/profile/update/picture', 'updateProfilePicture')->name('user.update.profile.picture');
             Route::put('/profile/update/personal-information', 'updateProfile')->name('user.update.profile');

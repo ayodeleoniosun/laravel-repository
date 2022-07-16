@@ -10,4 +10,6 @@ interface UserServiceInterface
     public function profile(array $data): UserResource;
 
     public function updateProfile(User $user, array $data): UserResource;
+
+    public function logout(User $user): int;
 }

@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Models\BusinessProfile;
-use App\Models\File;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\UserProfilePicture;
@@ -13,9 +11,8 @@ use Illuminate\Support\Collection;
 
 class UserRepository implements UserRepositoryInterface
 {
-    private User $user;
-
     protected FileRepositoryInterface $fileRepo;
+    private User $user;
 
     public function __construct(User $user, FileRepositoryInterface $fileRepo)
     {
@@ -26,17 +23,6 @@ class UserRepository implements UserRepositoryInterface
     public function getUsers(): Collection
     {
         return User::all();
-    }
-
-    public function getUser(string $slug): ?User
-    {
-        $user = $this->user->where('slug', $slug);
-
-        if ($user->first()) {
-            return $user->with('profile', 'businessProfile', 'pictures')->first();
-        }
-
-        return null;
     }
 
     public function getUserByEmailAddress(string $emailAddress): ?User
@@ -55,6 +41,10 @@ class UserRepository implements UserRepositoryInterface
         $user->last_name = $data['last_name'];
         $user->phone_number = $data['phone_number'];
         $user->update();
+
+        if ($data['state'] || $data['city']) {
+            $this->updateUserProfile($data, $user);
+        }
 
         $user->refresh();
 
@@ -75,12 +65,21 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function updatePassword(array $data, User $user): User
+    public function getUser(string $slug): ?User
+    {
+        $user = $this->user->where('slug', $slug);
+
+        if ($user->first()) {
+            return $user->with('profile', 'pictures')->first();
+        }
+
+        return null;
+    }
+
+    public function updatePassword(array $data, User $user): void
     {
         $user->password = bcrypt($data['new_password']);
         $user->update();
-
-        return $user;
     }
 
     public function updateProfilePicture(string $path, User $user): User
@@ -95,5 +94,10 @@ class UserRepository implements UserRepositoryInterface
         $user->fresh();
 
         return $this->getUser($user->slug);
+    }
+
+    public function logout(User $user): int
+    {
+        return $user->tokens()->delete();
     }
 }

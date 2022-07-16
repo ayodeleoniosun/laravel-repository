@@ -40,13 +40,13 @@ class UserService implements UserServiceInterface
         return new UserResource($this->userRepo->updateProfile($data, $user));
     }
 
-    public function updatePassword(User $user, array $data): UserResource
+    public function updatePassword(User $user, array $data): void
     {
         if (!$user || !Hash::check($data['current_password'], $user->password)) {
             abort(403, 'Incorrect current password');
         }
 
-        return new UserResource($this->userRepo->updatePassword($data, $user));
+        $this->userRepo->updatePassword($data, $user);
     }
 
     public function updateProfilePicture(User $user, array $data): UserResource
@@ -61,5 +61,10 @@ class UserService implements UserServiceInterface
         $path = Storage::disk('profile_pictures')->url($filename);
 
         return new UserResource($this->userRepo->updateProfilePicture($path, $user));
+    }
+
+    public function logout(User $user): int
+    {
+        return $this->userRepo->logout($user);
     }
 }

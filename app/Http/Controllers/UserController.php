@@ -62,6 +62,16 @@ class UserController extends Controller
         );
     }
 
+    public function logout(Request $request): JsonResponse
+    {
+        return $this->request(
+            'logout',
+            $request,
+            'User logged out',
+            Response::HTTP_OK
+        );
+    }
+
     public function request(string $type, $request, string $successMessage, string $httpCode): JsonResponse
     {
         try {
@@ -80,6 +90,10 @@ class UserController extends Controller
 
                 case 'update-profile-picture':
                     $response = $this->user->updateProfilePicture($request->user(), $request->validated());
+                    break;
+
+                case 'logout':
+                    $response = $this->user->logout($request->user());
                     break;
 
                 default:
