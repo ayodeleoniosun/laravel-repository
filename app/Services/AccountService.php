@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Resources\UserResource;
 use App\Jobs\SendForgotPasswordMail;
+use App\Jobs\SendWelcomeMail;
 use App\Models\PasswordReset;
 use App\Models\User;
 use App\Repositories\Interfaces\AccountRepositoryInterface;
@@ -34,7 +35,11 @@ class AccountService implements AccountServiceInterface
         $data['slug'] = Str::slug($fullname) . '-' . strtolower(Str::random(8));
         $data['password'] = bcrypt($data['password']);
 
-        return $this->accountRepo->store($data);
+        $user = $this->accountRepo->store($data);
+
+        SendWelcomeMail::dispatch($user);
+
+        return $user;
     }
 
     public function login(array $data): array
@@ -63,7 +68,7 @@ class AccountService implements AccountServiceInterface
 
         $token = Str::random(60);
         $forgotPasswordLink = config('app.url') . '/reset-password?token=' . $token;
-        $expiration = Carbon::now()->addMinutes(10)->toDateTimeString();
+        $expiration = Carbon::now()->addMinutes(30)->toDateTimeString();
 
         SendForgotPasswordMail::dispatch($user, $forgotPasswordLink);
 
