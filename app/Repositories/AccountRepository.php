@@ -33,9 +33,9 @@ class AccountRepository implements AccountRepositoryInterface
         return $user->createToken('auth_token')->plainTextToken;
     }
 
-    public function updatePassword(array $data, User $user): User
+    public function updatePassword(array $data, User $user): void
     {
-        return $this->userRepo->updatePassword($data, $user);
+        $this->userRepo->updatePassword($data, $user);
     }
 
 }
