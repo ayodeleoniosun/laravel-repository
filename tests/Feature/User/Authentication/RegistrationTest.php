@@ -16,7 +16,7 @@ test('cannot register with short password', function () {
         'password'      => '12345',
     ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/register', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/register', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -31,7 +31,7 @@ test('cannot register if lastname and email address is empty', function () {
         'password'     => '1234567',
     ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/register', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/register', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -43,7 +43,7 @@ test('cannot register if lastname and email address is empty', function () {
 test('cannot register if email address or phone number exist', function () {
     $user = $this->createUser();
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/register', $user->getAttributes());
+    $response = $this->postJson($this->apiBaseUrl . '/auth/register', $user->getAttributes());
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -61,7 +61,7 @@ test('can register new user', function () {
         'password'      => 'email@boilerplate.test',
     ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/register', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/register', $data);
     $response->assertCreated();
     $responseJson = json_decode($response->content());
 

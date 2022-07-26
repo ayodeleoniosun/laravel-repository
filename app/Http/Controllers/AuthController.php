@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Users\ResetPasswordRequest;
 use App\Http\Requests\Users\UserRegistrationRequest;
-use App\Services\Interfaces\AccountServiceInterface;
+use App\Services\Interfaces\AuthServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class AccountController extends Controller
+class AuthController extends Controller
 {
-    private AccountServiceInterface $account;
+    private AuthServiceInterface $auth;
 
-    public function __construct(AccountServiceInterface $account)
+    public function __construct(AuthServiceInterface $auth)
     {
-        $this->account = $account;
+        $this->auth = $auth;
     }
 
     public function register(UserRegistrationRequest $request): JsonResponse
@@ -63,19 +63,19 @@ class AccountController extends Controller
         try {
             switch ($type) {
                 case 'register':
-                    $response = $this->account->register($request->validated());
+                    $response = $this->auth->register($request->validated());
                     break;
 
                 case 'login':
-                    $response = $this->account->login($request->all());
+                    $response = $this->auth->login($request->all());
                     break;
 
                 case 'forgot-password':
-                    $response = $this->account->forgotPassword($request->all());
+                    $response = $this->auth->forgotPassword($request->all());
                     break;
 
                 case 'reset-password':
-                    $response = $this->account->resetPassword($request->validated());
+                    $response = $this->auth->resetPassword($request->validated());
                     break;
 
                 default:

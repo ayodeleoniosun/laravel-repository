@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Account",
+			"name": "Auth",
 			"item": [
 				{
 					"name": "Login",
@@ -50,9 +50,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{accounts}}/forgot-password",
+							"raw": "{{auth}}/forgot-password",
 							"host": [
-								"{{accounts}}"
+								"{{auth}}"
 							],
 							"path": [
 								"forgot-password"
@@ -82,9 +82,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{accounts}}/reset-password",
+							"raw": "{{auth}}/reset-password",
 							"host": [
-								"{{accounts}}"
+								"{{auth}}"
 							],
 							"path": [
 								"reset-password"
@@ -120,9 +120,9 @@
 							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"phone_number\" : \"08132016744\",\n    \"password\": \"ayodeleoniosun\"\n    \n}"
 						},
 						"url": {
-							"raw": "{{accounts}}/register",
+							"raw": "{{auth}}/register",
 							"host": [
-								"{{accounts}}"
+								"{{auth}}"
 							],
 							"path": [
 								"register"
@@ -138,195 +138,190 @@
 			"item": [
 				{
 					"name": "Profile",
-					"item": [
-						{
-							"name": "Profile",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{auth}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{users}}/ayodele-oniosun-bfxydmjd",
-									"host": [
-										"{{users}}"
-									],
-									"path": [
-										"ayodele-oniosun-bfxydmjd"
-									]
-								}
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
 							},
-							"response": []
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"phone_number\" : \"08132016744\",\n    \"state\": \"2\",\n    \"city\": \"3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"name": "Update Personal Information",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{auth}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"phone_number\" : \"08132016744\",\n    \"state\": \"2\",\n    \"city\": \"3\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{users}}/profile/update/personal-information",
-									"host": [
-										"{{users}}"
-									],
-									"path": [
-										"profile",
-										"update",
-										"personal-information"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Change Password",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{auth}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"current_password\" : \"ayodeleoniosun\",\n    \"new_password\" : \"ayodeleoniosun\",\n    \"new_password_confirmation\" : \"ayodeleoniosun\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{users}}/profile/update/password",
-									"host": [
-										"{{users}}"
-									],
-									"path": [
-										"profile",
-										"update",
-										"password"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Upload Profile Picture",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{auth}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "image",
-											"type": "file",
-											"src": "/Users/Dev-AY/Downloads/Landing Page/Container.png"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{users}}/profile/update/picture",
-									"host": [
-										"{{users}}"
-									],
-									"path": [
-										"profile",
-										"update",
-										"picture"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Logout",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{auth}}",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "image",
-											"type": "file",
-											"src": "/Users/Dev-AY/Downloads/Landing Page/Container.png"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{users}}/logout",
-									"host": [
-										"{{users}}"
-									],
-									"path": [
-										"logout"
-									]
-								}
-							},
-							"response": []
+						"url": {
+							"raw": "{{users}}/ayodele-oniosun-bfxydmjd",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"ayodele-oniosun-bfxydmjd"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Update Personal Information",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"phone_number\" : \"08132016744\",\n    \"state\": \"2\",\n    \"city\": \"3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{users}}/profile/update/personal-information",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"profile",
+								"update",
+								"personal-information"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"current_password\" : \"ayodeleoniosun\",\n    \"new_password\" : \"ayodeleoniosun\",\n    \"new_password_confirmation\" : \"ayodeleoniosun\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{users}}/profile/update/password",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"profile",
+								"update",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Profile Picture",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/Dev-AY/Downloads/Landing Page/Container.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{users}}/profile/update/picture",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"profile",
+								"update",
+								"picture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{users}}/profile/logout",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"profile",
+								"logout"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
@@ -360,12 +355,12 @@
 			"value": "http://boilerplate.test/api/v1"
 		},
 		{
-			"key": "auth",
-			"value": "Bearer 1|cnTiBqvqoVjsrkeBETGRUXDcgZEyJSEvh330G8Nk"
+			"key": "authorization",
+			"value": "Bearer 3|YkkicPQ6XYdEXIfhaJqfGBYuXjnyYjMTqHGKA9m1"
 		},
 		{
-			"key": "accounts",
-			"value": "{{baseUrl}}/accounts"
+			"key": "auth",
+			"value": "{{baseUrl}}/auth"
 		},
 		{
 			"key": "users",

@@ -14,7 +14,7 @@ uses(RefreshDatabase::class, CreateUsers::class, CreatePasswordResets::class);
 test('cannot send forgot password link to non existent email', function () {
     $data = ['email_address' => 'invalid@email.com'];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/forgot-password', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/forgot-password', $data);
     $response->assertNotFound();
     $responseJson = json_decode($response->content());
 
@@ -28,7 +28,7 @@ test('send forgot password link to existing email', function () {
     $user = $this->createUser();
     $data = ['email_address' => $user->email_address];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/forgot-password', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/forgot-password', $data);
     $response->assertOk();
     $responseJson = json_decode($response->content());
 
@@ -41,7 +41,7 @@ test('send forgot password link to existing email', function () {
 test('cannot reset password with empty token', function () {
     $data = ['token' => ''];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/reset-password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -54,7 +54,7 @@ test('cannot reset password with short passwords', function () {
         'new_password_confirmation' => '12345',
     ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/reset-password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -67,7 +67,7 @@ test('cannot reset password with non matching passwords', function () {
         'new_password_confirmation' => '12345678',
     ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/reset-password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -77,7 +77,7 @@ test('cannot reset password with non matching passwords', function () {
 test('cannot reset password with non existent token', function () {
     $data = ['token' => Str::random(60)];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/reset-password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -90,7 +90,7 @@ test('cannot reset password with invalid token', function () {
         'token'         => Str::random(60),
     ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/reset-password', $data);
     $response->assertUnprocessable();
     $responseJson = json_decode($response->content());
 
@@ -112,7 +112,7 @@ test('cannot reset password with expired token', function () {
         'new_password_confirmation' => $user->email_address,
     ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/reset-password', $data);
     $response->assertForbidden();
     $responseJson = json_decode($response->content());
 
@@ -135,7 +135,7 @@ test('can reset password', function () {
         'new_password_confirmation' => $user->email_address,
     ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/reset-password', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/reset-password', $data);
     $response->assertOk();
     $responseJson = json_decode($response->content());
 

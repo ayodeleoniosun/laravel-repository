@@ -7,24 +7,24 @@ use App\Jobs\SendForgotPasswordMail;
 use App\Jobs\SendWelcomeMail;
 use App\Models\PasswordReset;
 use App\Models\User;
-use App\Repositories\Interfaces\AccountRepositoryInterface;
+use App\Repositories\Interfaces\AuthRepositoryInterface;
 use App\Repositories\Interfaces\PasswordResetRepositoryInterface;
-use App\Services\Interfaces\AccountServiceInterface;
+use App\Services\Interfaces\AuthServiceInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class AccountService implements AccountServiceInterface
+class AuthService implements AuthServiceInterface
 {
-    protected AccountRepositoryInterface $accountRepo;
+    protected AuthRepositoryInterface $authRepo;
     protected PasswordResetRepositoryInterface $passwordResetRepo;
 
     public function __construct(
-        AccountRepositoryInterface       $accountRepo,
+        AuthRepositoryInterface          $authRepo,
         PasswordResetRepositoryInterface $passwordResetRepo)
     {
-        $this->accountRepo = $accountRepo;
+        $this->authRepo = $authRepo;
         $this->passwordResetRepo = $passwordResetRepo;
     }
 
@@ -35,7 +35,7 @@ class AccountService implements AccountServiceInterface
         $data['slug'] = Str::slug($fullname) . '-' . strtolower(Str::random(8));
         $data['password'] = bcrypt($data['password']);
 
-        $user = $this->accountRepo->store($data);
+        $user = $this->authRepo->store($data);
 
         SendWelcomeMail::dispatch($user);
 
@@ -44,13 +44,13 @@ class AccountService implements AccountServiceInterface
 
     public function login(array $data): array
     {
-        $user = $this->accountRepo->getUserByEmailAddress($data['email_address']);
+        $user = $this->authRepo->getUserByEmailAddress($data['email_address']);
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             abort(401, 'Incorrect login credentials');
         }
 
-        $token = $this->accountRepo->createToken($user);
+        $token = $this->authRepo->createToken($user);
 
         return [
             'user'  => new UserResource($user),
@@ -60,7 +60,7 @@ class AccountService implements AccountServiceInterface
 
     public function forgotPassword(array $data): ?PasswordReset
     {
-        $user = $this->accountRepo->getUserByEmailAddress($data['email_address']);
+        $user = $this->authRepo->getUserByEmailAddress($data['email_address']);
 
         if (!$user) {
             abort(404, 'Email address does not exist');
@@ -87,7 +87,7 @@ class AccountService implements AccountServiceInterface
             abort(403, 'Invalid token');
         }
 
-        $user = $this->accountRepo->getUserByEmailAddress($token->email);
+        $user = $this->authRepo->getUserByEmailAddress($token->email);
 
         $tokenExpiryMinutes = $token->created_at->diffInMinutes(now());
         $configExpiryMinutes = config('auth.passwords.users.expire');
@@ -97,7 +97,7 @@ class AccountService implements AccountServiceInterface
         }
 
         DB::transaction(function () use ($data, $user, $token) {
-            $this->accountRepo->updatePassword($data, $user);
+            $this->authRepo->updatePassword($data, $user);
             $this->passwordResetRepo->deleteToken($token);
         });
 

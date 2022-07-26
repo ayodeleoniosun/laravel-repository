@@ -13,7 +13,7 @@ test('cannot login with invalid credentials', function () {
         'password'      => 'email@boilerplate.test',
     ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/login', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/login', $data);
     $response->assertUnauthorized();
     $responseJson = json_decode($response->content());
 
@@ -26,7 +26,7 @@ test('can login with valid credentials', function () {
 
     $data = ['email_address' => $user->email_address, 'password' => 'password'];
 
-    $response = $this->postJson($this->apiBaseUrl . '/accounts/login', $data);
+    $response = $this->postJson($this->apiBaseUrl . '/auth/login', $data);
     $responseJson = json_decode($response->content());
 
     $response->assertOk()

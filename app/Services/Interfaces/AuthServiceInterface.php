@@ -5,7 +5,7 @@ namespace App\Services\Interfaces;
 use App\Models\PasswordReset;
 use App\Models\User;
 
-interface AccountServiceInterface
+interface AuthServiceInterface
 {
     public function register(array $data): User;
 
