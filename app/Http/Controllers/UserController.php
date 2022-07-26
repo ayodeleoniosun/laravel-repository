@@ -24,92 +24,56 @@ class UserController extends Controller
     {
         $request->merge(['slug' => $slug]);
 
-        return $this->request(
-            'profile',
-            $request,
-            '',
-            Response::HTTP_OK
-        );
+        $response = $this->user->profile($request->all());
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => '',
+            'data'    => $response,
+        ], Response::HTTP_OK);
     }
 
     public function updateProfile(UpdateUserProfileRequest $request): JsonResponse
     {
-        return $this->request(
-            'update-profile',
-            $request,
-            'Profile successfully updated',
-            Response::HTTP_OK
-        );
+        $response = $this->user->updateProfile($request->user(), $request->validated());
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Profile successfully updated',
+            'data'    => $response,
+        ], Response::HTTP_OK);
     }
 
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
-        return $this->request(
-            'update-password',
-            $request,
-            'Password successfully updated',
-            Response::HTTP_OK
-        );
+        $response = $this->user->updatePassword($request->user(), $request->validated());
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Password successfully updated',
+            'data'    => $response,
+        ], Response::HTTP_OK);
     }
 
     public function updateProfilePicture(UpdateProfilePictureRequest $request): JsonResponse
     {
-        return $this->request(
-            'update-profile-picture',
-            $request,
-            'Profile picture successfully updated',
-            Response::HTTP_OK
-        );
+        $response = $this->user->updateProfilePicture($request->user(), $request->validated());
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Profile picture successfully updated',
+            'data'    => $response,
+        ], Response::HTTP_OK);
     }
 
     public function logout(Request $request): JsonResponse
     {
-        return $this->request(
-            'logout',
-            $request,
-            'User logged out',
-            Response::HTTP_OK
-        );
-    }
+        $response = $this->user->logout($request->user());
 
-    public function request(string $type, $request, string $successMessage, string $httpCode): JsonResponse
-    {
-        try {
-            switch ($type) {
-                case 'profile':
-                    $response = $this->user->profile($request->all());
-                    break;
-
-                case 'update-profile':
-                    $response = $this->user->updateProfile($request->user(), $request->validated());
-                    break;
-
-                case 'update-password':
-                    $response = $this->user->updatePassword($request->user(), $request->validated());
-                    break;
-
-                case 'update-profile-picture':
-                    $response = $this->user->updateProfilePicture($request->user(), $request->validated());
-                    break;
-
-                case 'logout':
-                    $response = $this->user->logout($request->user());
-                    break;
-
-                default:
-                    $response = null;
-            }
-
-            return response()->json([
-                'status'  => 'success',
-                'message' => $successMessage,
-                'data'    => $response,
-            ], $httpCode);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => $e->getMessage(),
-            ], $e->getStatusCode());
-        }
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'User logged out',
+            'data'    => $response,
+        ], Response::HTTP_OK);
     }
 }

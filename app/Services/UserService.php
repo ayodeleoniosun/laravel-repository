@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Exceptions\CustomException;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Interfaces\UserServiceInterface;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +25,7 @@ class UserService implements UserServiceInterface
         $user = $this->userRepo->getUser($data['slug']);
 
         if (!$user) {
-            abort(404, 'User not found');
+            throw new CustomException('User not found', Response::HTTP_NOT_FOUND);
         }
 
         return new UserResource($user);
@@ -34,7 +36,7 @@ class UserService implements UserServiceInterface
         $phoneNumberExist = $this->userRepo->getDuplicateUserByPhoneNumber($data['phone_number'], $user->id);
 
         if ($phoneNumberExist) {
-            abort(403, 'Phone number belongs to another user');
+            throw new CustomException('Phone number belongs to another user', Response::HTTP_FORBIDDEN);
         }
 
         return new UserResource($this->userRepo->updateProfile($data, $user));
@@ -43,7 +45,7 @@ class UserService implements UserServiceInterface
     public function updatePassword(User $user, array $data): void
     {
         if (!$user || !Hash::check($data['current_password'], $user->password)) {
-            abort(403, 'Incorrect current password');
+            throw new CustomException('Incorrect current password', Response::HTTP_FORBIDDEN);
         }
 
         $this->userRepo->updatePassword($data, $user);

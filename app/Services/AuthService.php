@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\CustomException;
 use App\Http\Resources\UserResource;
 use App\Jobs\SendForgotPasswordMail;
 use App\Jobs\SendWelcomeMail;
@@ -11,6 +12,7 @@ use App\Repositories\Interfaces\AuthRepositoryInterface;
 use App\Repositories\Interfaces\PasswordResetRepositoryInterface;
 use App\Services\Interfaces\AuthServiceInterface;
 use Carbon\Carbon;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -18,11 +20,10 @@ use Illuminate\Support\Str;
 class AuthService implements AuthServiceInterface
 {
     protected AuthRepositoryInterface $authRepo;
+
     protected PasswordResetRepositoryInterface $passwordResetRepo;
 
-    public function __construct(
-        AuthRepositoryInterface          $authRepo,
-        PasswordResetRepositoryInterface $passwordResetRepo)
+    public function __construct(AuthRepositoryInterface $authRepo, PasswordResetRepositoryInterface $passwordResetRepo)
     {
         $this->authRepo = $authRepo;
         $this->passwordResetRepo = $passwordResetRepo;
@@ -47,7 +48,7 @@ class AuthService implements AuthServiceInterface
         $user = $this->authRepo->getUserByEmailAddress($data['email_address']);
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
-            abort(401, 'Incorrect login credentials');
+            throw new CustomException('Incorrect login credentials', Response::HTTP_UNAUTHORIZED);
         }
 
         $token = $this->authRepo->createToken($user);
@@ -63,7 +64,7 @@ class AuthService implements AuthServiceInterface
         $user = $this->authRepo->getUserByEmailAddress($data['email_address']);
 
         if (!$user) {
-            abort(404, 'Email address does not exist');
+            throw new CustomException('Email address does not exist', Response::HTTP_NOT_FOUND);
         }
 
         $token = Str::random(60);
@@ -84,7 +85,7 @@ class AuthService implements AuthServiceInterface
         $token = $this->passwordResetRepo->getToken($data);
 
         if (!$token) {
-            abort(403, 'Invalid token');
+            throw new CustomException('Invalid token', Response::HTTP_FORBIDDEN);
         }
 
         $user = $this->authRepo->getUserByEmailAddress($token->email);
@@ -93,7 +94,7 @@ class AuthService implements AuthServiceInterface
         $configExpiryMinutes = config('auth.passwords.users.expire');
 
         if ($tokenExpiryMinutes > $configExpiryMinutes) {
-            abort(403, 'Token has expired. Kindly request for a forgot password link again.');
+            throw new CustomException('Token has expired. Kindly request for a forgot password link again.', Response::HTTP_FORBIDDEN);
         }
 
         DB::transaction(function () use ($data, $user, $token) {

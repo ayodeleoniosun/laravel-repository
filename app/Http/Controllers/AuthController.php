@@ -20,78 +20,45 @@ class AuthController extends Controller
 
     public function register(UserRegistrationRequest $request): JsonResponse
     {
-        return $this->request(
-            'register',
-            $request,
-            'Registration successful',
-            Response::HTTP_CREATED
-        );
+        $response = $this->auth->register($request->validated());
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Registration successful',
+            'data'    => $response,
+        ], Response::HTTP_CREATED);
     }
 
     public function login(Request $request): JsonResponse
     {
-        return $this->request(
-            'login',
-            $request,
-            'Login successful',
-            Response::HTTP_OK
-        );
+        $response = $this->auth->login($request->all());
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Login successful',
+            'data'    => $response,
+        ], Response::HTTP_OK);
     }
 
     public function forgotPassword(Request $request): JsonResponse
     {
-        return $this->request(
-            'forgot-password',
-            $request,
-            'Reset password link successfully sent to ' . $request->email_address,
-            Response::HTTP_OK
-        );
+        $response = $this->auth->forgotPassword($request->all());
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Reset password link successfully sent to ' . $request->email_address,
+            'data'    => $response,
+        ], Response::HTTP_OK);
     }
 
     public function resetPassword(ResetPasswordRequest $request): JsonResponse
     {
-        return $this->request(
-            'reset-password',
-            $request,
-            'Password successfully reset',
-            Response::HTTP_OK
-        );
-    }
+        $response = $this->auth->resetPassword($request->validated());
 
-    public function request(string $type, $request, string $successMessage, string $httpCode): JsonResponse
-    {
-        try {
-            switch ($type) {
-                case 'register':
-                    $response = $this->auth->register($request->validated());
-                    break;
-
-                case 'login':
-                    $response = $this->auth->login($request->all());
-                    break;
-
-                case 'forgot-password':
-                    $response = $this->auth->forgotPassword($request->all());
-                    break;
-
-                case 'reset-password':
-                    $response = $this->auth->resetPassword($request->validated());
-                    break;
-
-                default:
-                    $response = null;
-            }
-
-            return response()->json([
-                'status'  => 'success',
-                'message' => $successMessage,
-                'data'    => $response,
-            ], $httpCode);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => $e->getMessage(),
-            ], $e->getStatusCode());
-        }
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Password successfully reset',
+            'data'    => $response,
+        ], Response::HTTP_OK);
     }
 }
