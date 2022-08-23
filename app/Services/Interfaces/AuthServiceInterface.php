@@ -2,8 +2,8 @@
 
 namespace App\Services\Interfaces;
 
-use App\Models\PasswordReset;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 interface AuthServiceInterface
 {
@@ -11,7 +11,7 @@ interface AuthServiceInterface
 
     public function login(array $data): array;
 
-    public function forgotPassword(array $data): ?PasswordReset;
+    public function forgotPassword(Request $request): string;
 
-    public function resetPassword(array $data): User;
+    public function updatePassword(Request $request): string;
 }

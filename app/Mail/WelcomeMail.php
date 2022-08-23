@@ -37,7 +37,7 @@ class WelcomeMail extends Mailable
             ->markdown('email.user.welcome')
             ->with([
                 'first_name' => ucfirst($this->user->first_name),
-                'app_name'   => $appName
+                'app_name'   => $appName,
             ]);
     }
 }
