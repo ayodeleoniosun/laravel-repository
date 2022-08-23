@@ -1,4 +1,4 @@
-name: Boilerplate CI
+name: Laravel Repository Pattern CI
 
 on:
   push:
