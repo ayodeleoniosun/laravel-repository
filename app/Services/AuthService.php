@@ -7,7 +7,6 @@ use App\Http\Resources\UserResource;
 use App\Jobs\SendWelcomeMail;
 use App\Models\User;
 use App\Repositories\Interfaces\AuthRepositoryInterface;
-use App\Repositories\Interfaces\PasswordResetRepositoryInterface;
 use App\Services\Interfaces\AuthServiceInterface;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
@@ -28,19 +27,16 @@ class AuthService implements AuthServiceInterface
 
     protected AuthRepositoryInterface $authRepo;
 
-    protected PasswordResetRepositoryInterface $passwordResetRepo;
-
-    public function __construct(AuthRepositoryInterface $authRepo, PasswordResetRepositoryInterface $passwordResetRepo)
+    public function __construct(AuthRepositoryInterface $authRepo)
     {
         $this->authRepo = $authRepo;
-        $this->passwordResetRepo = $passwordResetRepo;
     }
 
     public function register(array $data): User
     {
-        $fullname = strtolower($data['first_name'].' '.$data['last_name']);
+        $fullname = strtolower($data['first_name'] . ' ' . $data['last_name']);
 
-        $data['slug'] = Str::slug($fullname).'-'.strtolower(Str::random(8));
+        $data['slug'] = Str::slug($fullname) . '-' . strtolower(Str::random(8));
         $data['password'] = Hash::make($data['password']);
 
         $user = $this->authRepo->store($data);
@@ -61,30 +57,24 @@ class AuthService implements AuthServiceInterface
         $token = $this->authRepo->createToken($user);
 
         return [
-            'user' => new UserResource($user),
+            'user'  => new UserResource($user),
             'token' => $token,
         ];
     }
 
-    /**
-     * @throws CustomException
-     */
     public function forgotPassword(Request $request): string
     {
         $resetPassword = $this->sendResetPasswordMail($request);
-        $isSuccessful = $resetPassword->getSession()->has('status');
 
-        if (! $isSuccessful) {
-            $error = $resetPassword->getSession()->get('errors')->all()[0];
-            throw new CustomException($error);
-        }
+        $content = json_decode($resetPassword->getContent());
 
-        return $resetPassword->getSession()->get('status');
+        return $content->message;
     }
 
     public function updatePassword(Request $request): string
     {
         $resetUserPassword = $this->resetUserPassword($request);
+
         $content = json_decode($resetUserPassword->getContent());
 
         return $content->message;

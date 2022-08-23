@@ -8,6 +8,7 @@ use App\Models\UserProfilePicture;
 use App\Repositories\Interfaces\FileRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -76,7 +77,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function updatePassword(array $data, User $user): void
     {
-        $user->password = bcrypt($data['new_password']);
+        $user->password = Hash::make($data['new_password']);
         $user->update();
     }
 

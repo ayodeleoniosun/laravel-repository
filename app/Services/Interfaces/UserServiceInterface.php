@@ -11,7 +11,7 @@ interface UserServiceInterface
 
     public function updateProfile(User $user, array $data): UserResource;
 
-    public function updatePassword(User $user, array $data): void;
+    public function updatePassword(User $user, array $data): string;
 
     public function updateProfilePicture(User $user, array $data): UserResource;
 

@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Interfaces\UserServiceInterface;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserService implements UserServiceInterface
@@ -42,13 +41,11 @@ class UserService implements UserServiceInterface
         return new UserResource($this->userRepo->updateProfile($data, $user));
     }
 
-    public function updatePassword(User $user, array $data): void
+    public function updatePassword(User $user, array $data): string
     {
-        if (! $user || ! Hash::check($data['current_password'], $user->password)) {
-            throw new CustomException('Incorrect current password', Response::HTTP_FORBIDDEN);
-        }
-
         $this->userRepo->updatePassword($data, $user);
+
+        return 'Password successfully updated';
     }
 
     public function updateProfilePicture(User $user, array $data): UserResource
@@ -56,7 +53,7 @@ class UserService implements UserServiceInterface
         $image = (object) $data['image'];
 
         $extension = $image->extension();
-        $filename = $user->id.''.time().'.'.$extension;
+        $filename = $user->id . '' . time() . '.' . $extension;
 
         Storage::disk('profile_pictures')->put($filename, file_get_contents($image->getRealPath()));
 

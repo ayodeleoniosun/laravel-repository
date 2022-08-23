@@ -2,20 +2,19 @@
 
 namespace Tests;
 
+use Illuminate\Foundation\Testing\Concerns\InteractsWithSession;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, InteractsWithSession;
 
-    protected string $baseUrl = 'http://boilerplate.test';
-
-    protected string $apiBaseUrl;
+    protected string $baseUrl;
 
     protected function setup(): void
     {
         parent::setUp();
-        $this->apiBaseUrl = $this->baseUrl.'/api/v1';
+        $this->baseUrl = config('app.url') . '/api/v1';
         $this->faker = \Faker\Factory::create();
     }
 }
