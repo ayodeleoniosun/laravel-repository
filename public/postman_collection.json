@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "e4ffffc7-3192-4632-9034-3774a8af6430",
-		"name": "Boilerplate",
+		"name": "Laravel repository pattern",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "18037473"
 	},
@@ -13,10 +13,16 @@
 					"name": "Login",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"ayodeleoniosun\"\n    \n}",
+							"raw": "{\n    \"email\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"ayodeleoniosun\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,9 +30,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{accounts}}/login",
+							"raw": "{{auth}}/login",
 							"host": [
-								"{{accounts}}"
+								"{{auth}}"
 							],
 							"path": [
 								"login"
@@ -39,10 +45,16 @@
 					"name": "Forgot Password",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\"\n}",
+							"raw": "{\n    \"email\" : \"ayodeleoniosun63@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,7 +86,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"new_password\": \"ayodeleoniosun\",\n    \"new_password_confirmation\": \"ayodeleoniosun\",\n    \"token\" : \"IqDVDOnLKEuRlcgtVeKtI9XcM1stnn30fCKDy43ZMNTEFMEL9E3gIZ9YhO7N\"\n}",
+							"raw": "{\n    \"email\" : \"ayodeleoniosun63@gmail.com\",\n    \"password\": \"ayodeleoniosun\",\n    \"password_confirmation\": \"ayodeleoniosun\",\n    \"token\" : \"0871a94b80ca2e3e6dee76fc16483d4bef07d60db0636dcdb7899f15a75ae149\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -117,7 +129,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"email_address\" : \"ayodeleoniosun63@gmail.com\",\n    \"phone_number\" : \"08132016744\",\n    \"password\": \"ayodeleoniosun\"\n    \n}"
+							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"email\" : \"ayodeleoniosun63@gmail.com\",\n    \"phone\" : \"08132016744\",\n    \"password\": \"ayodeleoniosun\"\n    \n}"
 						},
 						"url": {
 							"raw": "{{auth}}/register",
@@ -165,12 +177,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{users}}/ayodele-oniosun-bfxydmjd",
+							"raw": "{{users}}/ayodele-oniosun-2mqiyerj",
 							"host": [
 								"{{users}}"
 							],
 							"path": [
-								"ayodele-oniosun-bfxydmjd"
+								"ayodele-oniosun-2mqiyerj"
 							]
 						}
 					},
@@ -194,7 +206,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"first_name\" : \"Ayodele\",\n    \"last_name\" : \"Oniosun\",\n    \"phone_number\" : \"08132016744\",\n    \"state\": \"2\",\n    \"city\": \"3\"\n}",
+							"raw": "{\n    \"first_name\" : \"Ayodele Abraham\",\n    \"last_name\" : \"Oniosun\",\n    \"phone\" : \"08132016744\",\n    \"state\": \"2\",\n    \"city\": \"3\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -233,7 +245,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"current_password\" : \"ayodeleoniosun\",\n    \"new_password\" : \"ayodeleoniosun\",\n    \"new_password_confirmation\" : \"ayodeleoniosun\"\n}",
+							"raw": "{\n    \"current_password\" : \"ayodeleoniosun\",\n    \"new_password\" : \"ayodeleoniosun@gmail.COM1\",\n    \"new_password_confirmation\" : \"ayodeleoniosun@gmail.COM1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -276,7 +288,7 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/Users/Dev-AY/Downloads/Landing Page/Container.png"
+									"src": "/Users/Dev-AY/Downloads/Screenshot 2022-08-15 at 10.09.43 AM.png"
 								}
 							]
 						},
@@ -352,11 +364,11 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://boilerplate.test/api/v1"
+			"value": "http://repository-pattern.test/api/v1"
 		},
 		{
 			"key": "authorization",
-			"value": "Bearer 3|YkkicPQ6XYdEXIfhaJqfGBYuXjnyYjMTqHGKA9m1"
+			"value": "Bearer 3|G7TCxRyRrfm83sB5X5Zdu1VxwRoT2lx1gHNNTivc"
 		},
 		{
 			"key": "auth",
