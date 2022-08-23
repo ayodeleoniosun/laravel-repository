@@ -8,7 +8,6 @@ use App\Http\Requests\Users\UpdateUserProfileRequest;
 use App\Services\Interfaces\UserServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class UserController extends Controller
 {

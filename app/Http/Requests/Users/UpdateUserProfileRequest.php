@@ -24,11 +24,11 @@ class UpdateUserProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name'   => 'required|string',
-            'last_name'    => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
             'phone' => 'required|string|min:10|max:15',
-            'state'        => 'required|exists:states,id',
-            'city'         => 'required|exists:cities,id',
+            'state' => 'required|exists:states,id',
+            'city' => 'required|exists:cities,id',
         ];
     }
 }

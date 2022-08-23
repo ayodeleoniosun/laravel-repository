@@ -26,9 +26,9 @@ class ResponseMacroServiceProvider extends ServiceProvider
     {
         Response::macro('success', function ($data, string $message = '', int $statusCode = 200) {
             return Response::json([
-                'status'  => 'success',
+                'status' => 'success',
                 'message' => $message,
-                'data'    => $data,
+                'data' => $data,
             ], $statusCode);
         });
 
@@ -38,7 +38,7 @@ class ResponseMacroServiceProvider extends ServiceProvider
 
         Response::macro('error', function (string $message, int $statusCode = 400) {
             return Response::json([
-                'status'  => 'error',
+                'status' => 'error',
                 'message' => $message,
             ], $statusCode);
         });

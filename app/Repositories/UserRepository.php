@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 class UserRepository implements UserRepositoryInterface
 {
     protected FileRepositoryInterface $fileRepo;
+
     private User $user;
 
     public function __construct(User $user, FileRepositoryInterface $fileRepo)
@@ -50,7 +51,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function updateUserProfile(array $data, User $user): User
     {
-        if (!$user->profile) {
+        if (! $user->profile) {
             $user->profile = new UserProfile();
             $user->profile->user_id = $user->id;
         }

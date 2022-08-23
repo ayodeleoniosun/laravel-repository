@@ -45,7 +45,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn($value, $attributes) => ucwords($attributes['first_name'] . ' ' . $attributes['last_name'])
+            get: fn ($value, $attributes) => ucwords($attributes['first_name'].' '.$attributes['last_name'])
         );
     }
 

@@ -10,10 +10,10 @@ uses(RefreshDatabase::class, CreateUsers::class);
 test('cannot login with invalid credentials', function () {
     $data = [
         'email' => 'email@boilerplate.test',
-        'password'      => 'email@boilerplate.test',
-    ]
+        'password' => 'email@boilerplate.test',
+    ];
 
-    $response = $this->postJson($this->apiBaseUrl . '/auth/login', $data);
+    $response = $this->postJson($this->apiBaseUrl.'/auth/login', $data);
     $response->assertUnauthorized();
     $responseJson = json_decode($response->content());
 
@@ -26,7 +26,7 @@ test('can login with valid credentials', function () {
 
     $data = ['email' => $user->email, 'password' => 'password'];
 
-    $response = $this->postJson($this->apiBaseUrl . '/auth/login', $data);
+    $response = $this->postJson($this->apiBaseUrl.'/auth/login', $data);
     $responseJson = json_decode($response->content());
 
     $response->assertOk()

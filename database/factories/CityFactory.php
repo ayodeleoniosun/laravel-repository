@@ -18,7 +18,7 @@ class CityFactory extends Factory
     {
         return [
             'state_id' => '1',
-            'name'     => $this->faker->city(),
+            'name' => $this->faker->city(),
         ];
     }
 }

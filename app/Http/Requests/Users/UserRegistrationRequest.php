@@ -26,10 +26,10 @@ class UserRegistrationRequest extends FormRequest
     {
         return [
             'first_name' => 'required|string',
-            'last_name'  => 'required|string',
-            'email'      => 'required|email|unique:users',
-            'password'   => ['required', Password::min(8)->uncompromised()],
-            'phone'      => 'required|string|min:10|max:15|unique:users',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => ['required', Password::min(8)->uncompromised()],
+            'phone' => 'required|string|min:10|max:15|unique:users',
         ];
     }
 }

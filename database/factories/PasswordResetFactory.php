@@ -18,8 +18,8 @@ class PasswordResetFactory extends Factory
     public function definition()
     {
         return [
-            'email'      => $this->faker->email,
-            'token'      => bcrypt(Str::random(10)),
+            'email' => $this->faker->email,
+            'token' => bcrypt(Str::random(10)),
             'created_at' => $this->faker->dateTime(),
         ];
     }

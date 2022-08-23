@@ -33,11 +33,11 @@ class WelcomeMail extends Mailable
         $appName = config('app.name');
 
         return $this->from(config('mail.from.address', 'Welcome'))
-            ->subject('Welcome to ' . $appName)
+            ->subject('Welcome to '.$appName)
             ->markdown('email.user.welcome')
             ->with([
                 'first_name' => ucfirst($this->user->first_name),
-                'app_name'   => $appName,
+                'app_name' => $appName,
             ]);
     }
 }

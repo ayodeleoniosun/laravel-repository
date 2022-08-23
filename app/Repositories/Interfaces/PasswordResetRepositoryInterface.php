@@ -11,5 +11,4 @@ interface PasswordResetRepositoryInterface
     public function getToken(array $data): ?PasswordReset;
 
     public function deleteToken(PasswordReset $token): void;
-
 }

@@ -17,7 +17,7 @@ class StateFactory extends Factory
     public function definition()
     {
         return [
-            'name'     => $this->faker->state(),
+            'name' => $this->faker->state(),
         ];
     }
 }

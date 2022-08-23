@@ -10,7 +10,7 @@ class UserProfilePictureResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function toArray($request)
@@ -18,7 +18,7 @@ class UserProfilePictureResource extends JsonResource
         $path = Storage::disk('profile_pictures')->url($this->file->path);
 
         return [
-            'id'   => $this->id,
+            'id' => $this->id,
             'path' => $path,
         ];
     }

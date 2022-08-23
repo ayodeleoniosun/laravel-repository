@@ -37,5 +37,4 @@ class AuthRepository implements AuthRepositoryInterface
     {
         $this->userRepo->updatePassword($data, $user);
     }
-
 }
