@@ -34,9 +34,9 @@ class AuthService implements AuthServiceInterface
 
     public function register(array $data): User
     {
-        $fullname = strtolower($data['first_name'] . ' ' . $data['last_name']);
+        $fullname = strtolower($data['first_name'].' '.$data['last_name']);
 
-        $data['slug'] = Str::slug($fullname) . '-' . strtolower(Str::random(8));
+        $data['slug'] = Str::slug($fullname).'-'.strtolower(Str::random(8));
         $data['password'] = Hash::make($data['password']);
 
         $user = $this->authRepo->store($data);
@@ -57,7 +57,7 @@ class AuthService implements AuthServiceInterface
         $token = $this->authRepo->createToken($user);
 
         return [
-            'user'  => new UserResource($user),
+            'user' => new UserResource($user),
             'token' => $token,
         ];
     }

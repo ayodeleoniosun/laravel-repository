@@ -53,7 +53,7 @@ class UserService implements UserServiceInterface
         $image = (object) $data['image'];
 
         $extension = $image->extension();
-        $filename = $user->id . '' . time() . '.' . $extension;
+        $filename = $user->id.''.time().'.'.$extension;
 
         Storage::disk('profile_pictures')->put($filename, file_get_contents($image->getRealPath()));
 
