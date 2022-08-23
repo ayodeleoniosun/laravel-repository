@@ -20,13 +20,11 @@ class UserResource extends JsonResource
             'last_name'       => ucfirst($this->last_name),
             'fullname'        => $this->fullname,
             'slug'            => $this->slug,
-            'email'   => $this->email,
-            'phone'    => $this->phone,
+            'email'           => $this->email,
+            'phone'           => $this->phone,
             'verified'        => $this->hasVerifiedEmail(),
             'profile'         => new UserProfileResource($this->whenLoaded('profile')),
-            'profile_picture' => $this->whenLoaded('pictures', function () {
-                return new UserProfilePictureResource($this->pictures->last());
-            }),
+            'profile_picture' => new UserProfilePictureResource($this->picture),
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,
         ];

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class UserProfilePictureResource extends JsonResource
 {
@@ -14,11 +15,11 @@ class UserProfilePictureResource extends JsonResource
      */
     public function toArray($request)
     {
+        $path = Storage::disk('profile_pictures')->url($this->file->path);
+
         return [
-            'id'         => $this->id,
-            'path'       => $this->file->path,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'id'   => $this->id,
+            'path' => $path,
         ];
     }
 }
