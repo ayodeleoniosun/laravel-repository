@@ -19,9 +19,6 @@ class CustomException extends Exception
 
     public function render(): JsonResponse
     {
-        return response()->json([
-            'status'  => 'error',
-            'message' => $this->message,
-        ], $this->statusCode);
+        return response()->error($this->message, $this->statusCode);
     }
 }

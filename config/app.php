@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'debug' => (bool)env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -198,12 +198,12 @@ return [
         //Repository Providers
         App\Providers\Repositories\AuthRepositoryProvider::class,
         App\Providers\Repositories\UserRepositoryProvider::class,
-        App\Providers\Repositories\PasswordResetRepositoryProvider::class,
         App\Providers\Repositories\FileRepositoryProvider::class,
 
         //Service Providers
         App\Providers\Services\AuthServiceProvider::class,
         App\Providers\Services\UserServiceProvider::class,
+        App\Providers\ResponseMacroServiceProvider::class,
     ],
 
     /*
