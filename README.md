@@ -5,23 +5,23 @@ and authenticated user CRUD operations for example purpose.
 
 # Getting Started
 
-* Development Requirements
-* Installation
-* Starting Devevelopment Server
-* Documentation
-* Testing
+- Development Requirements
+- Installation
+- Starting Devevelopment Server
+- Documentation
+- Testing
 
 ## Development Requirements
 
 This application currently runs on <b>Laravel 9.20</b> and the development requirements to get this application up and
 running are as follow:
 
-* PHP 8.1+
-* Sqlite
-* NPM
-* MySQL
-* git
-* Composer
+- PHP 8.1+
+- Sqlite
+- NPM
+- MySQL
+- git
+- Composer
 
 ## Installation
 
@@ -52,13 +52,13 @@ composer install
 
 ```bash
 php artisan key:generate
-``` 
+```
 
 #### Step 7: Run database migration alongside the seeders
 
 ```bash
 php artisan migrate:fresh --seed
-``` 
+```
 
 Ensure that your mysql server is up before running the above command
 
@@ -68,16 +68,16 @@ After the installation of the packages and running migrations, then, it's time t
 
 Development server can be started in three ways:
 
-* Using ```php artisan serve```
-* Using [Valet](https://laravel.com/docs/8.x/valet)
-* Docker via [Laravel sail](https://laravel.com/docs/8.x/sail)
+- Using `php artisan serve`
+- Using [Valet](https://laravel.com/docs/8.x/valet)
+- Docker via [Laravel sail](https://laravel.com/docs/8.x/sail)
 
 I recommend using valet or Laravel sail to start the development server to ensure that the application works perfectly
 across all developers' machines regardless of their operating systems.
 
 #### Note:
 
-* If you are using Laravel sail to start your development server, your default database configuration in the .env should
+- If you are using Laravel sail to start your development server, your default database configuration in the .env should
   be as follow:
 
 ```bash
@@ -110,5 +110,5 @@ The application is currently made up of feature tests and only the RESTful endpo
 can be run using:
 
 ```bash
-./vendor/bin/pest
+php artisan test
 ```
