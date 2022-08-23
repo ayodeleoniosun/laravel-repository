@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Users\UpdatePasswordRequest;
 use App\Http\Requests\Users\UpdateProfilePictureRequest;
-use App\Http\Requests\Users\UpdateUserBusinessInformationRequest;
 use App\Http\Requests\Users\UpdateUserProfileRequest;
 use App\Services\Interfaces\UserServiceInterface;
 use Illuminate\Http\JsonResponse;
@@ -23,57 +22,36 @@ class UserController extends Controller
     public function profile(Request $request, string $slug): JsonResponse
     {
         $request->merge(['slug' => $slug]);
-
         $response = $this->user->profile($request->all());
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => '',
-            'data'    => $response,
-        ], Response::HTTP_OK);
+        return response()->success($response);
     }
 
     public function updateProfile(UpdateUserProfileRequest $request): JsonResponse
     {
         $response = $this->user->updateProfile($request->user(), $request->validated());
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Profile successfully updated',
-            'data'    => $response,
-        ], Response::HTTP_OK);
+        return response()->success($response, 'Profile successfully updated');
     }
 
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
-        $response = $this->user->updatePassword($request->user(), $request->validated());
+        $this->user->updatePassword($request->user(), $request->validated());
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Password successfully updated',
-            'data'    => $response,
-        ], Response::HTTP_OK);
+        return response()->success('Password successfully updated');
     }
 
     public function updateProfilePicture(UpdateProfilePictureRequest $request): JsonResponse
     {
         $response = $this->user->updateProfilePicture($request->user(), $request->validated());
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Profile picture successfully updated',
-            'data'    => $response,
-        ], Response::HTTP_OK);
+        return response()->success($response, 'Profile picture successfully updated');
     }
 
     public function logout(Request $request): JsonResponse
     {
-        $response = $this->user->logout($request->user());
+        $this->user->logout($request->user());
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'User logged out',
-            'data'    => $response,
-        ], Response::HTTP_OK);
+        return response()->success('User logged out');
     }
 }

@@ -37,10 +37,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function updateProfile(array $data, User $user): User
     {
-        $user->first_name = $data['first_name'];
-        $user->last_name = $data['last_name'];
-        $user->phone = $data['phone'];
-        $user->update();
+        $user->update($data);
 
         if ($data['state'] || $data['city']) {
             $this->updateUserProfile($data, $user);
