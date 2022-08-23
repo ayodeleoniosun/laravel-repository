@@ -30,14 +30,14 @@ test('can view profile', function () {
     $this->assertEquals($data->last_name, $this->user->last_name);
     $this->assertEquals($data->fullname, $this->user->fullname);
     $this->assertEquals($data->slug, $this->user->slug);
-    $this->assertEquals($data->email_address, $this->user->email_address);
-    $this->assertEquals($data->phone_number, $this->user->phone_number);
+    $this->assertEquals($data->email, $this->user->email);
+    $this->assertEquals($data->phone, $this->user->phone);
 });
 
 test('cannot update profile with empty fields', function () {
     $data = [
         'first_name'   => 'firstname',
-        'phone_number' => '08123456789',
+        'phone' => '08123456789',
     ];
 
     $response = $this->putJson($this->apiBaseUrl . '/users/profile/update/personal-information', $data);
@@ -56,7 +56,7 @@ test('cannot update profile with existing phone number', function () {
     $data = [
         'first_name'   => 'firstname',
         'last_name'    => 'lastname',
-        'phone_number' => $user->phone_number,
+        'phone' => $user->phone,
         'state'        => $state->id,
         'city'         => $city->id,
     ];
@@ -76,7 +76,7 @@ test('can update profile', function () {
     $data = [
         'first_name'   => 'new firstname',
         'last_name'    => 'new lastname',
-        'phone_number' => Str::random(11),
+        'phone' => Str::random(11),
         'state'        => $state->id,
         'city'         => $city->id,
     ];
@@ -90,7 +90,7 @@ test('can update profile', function () {
     $this->assertEquals($responseJson->data->first_name, ucfirst($data['first_name']));
     $this->assertEquals($responseJson->data->last_name, ucfirst($data['last_name']));
     $this->assertEquals($responseJson->data->fullname, ucwords($data['first_name'] . ' ' . $data['last_name']));
-    $this->assertEquals($responseJson->data->phone_number, $data['phone_number']);
+    $this->assertEquals($responseJson->data->phone, $data['phone']);
 });
 
 test('cannot update password with wrong current password', function () {

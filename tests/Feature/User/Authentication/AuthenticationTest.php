@@ -9,9 +9,9 @@ uses(RefreshDatabase::class, CreateUsers::class);
 
 test('cannot login with invalid credentials', function () {
     $data = [
-        'email_address' => 'email@boilerplate.test',
+        'email' => 'email@boilerplate.test',
         'password'      => 'email@boilerplate.test',
-    ];
+    ]
 
     $response = $this->postJson($this->apiBaseUrl . '/auth/login', $data);
     $response->assertUnauthorized();
@@ -24,7 +24,7 @@ test('cannot login with invalid credentials', function () {
 test('can login with valid credentials', function () {
     $user = $this->createUser();
 
-    $data = ['email_address' => $user->email_address, 'password' => 'password'];
+    $data = ['email' => $user->email, 'password' => 'password'];
 
     $response = $this->postJson($this->apiBaseUrl . '/auth/login', $data);
     $responseJson = json_decode($response->content());
@@ -34,7 +34,7 @@ test('can login with valid credentials', function () {
             'status',
             'message',
             'data' => [
-                'user' => ['id', 'first_name', 'last_name', 'email_address', 'slug', 'phone_number',
+                'user' => ['id', 'first_name', 'last_name', 'email', 'slug', 'phone',
                     'verified', 'created_at', 'updated_at',
                 ],
                 'token',

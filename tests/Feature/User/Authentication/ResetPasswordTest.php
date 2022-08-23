@@ -12,7 +12,7 @@ use Tests\Traits\CreateUsers;
 uses(RefreshDatabase::class, CreateUsers::class, CreatePasswordResets::class);
 
 test('cannot send forgot password link to non existent email', function () {
-    $data = ['email_address' => 'invalid@email.com'];
+    $data = ['email' => 'invalid@email.com'];
 
     $response = $this->postJson($this->apiBaseUrl . '/auth/forgot-password', $data);
     $response->assertNotFound();
@@ -26,14 +26,14 @@ test('send forgot password link to existing email', function () {
     Mail::fake();
 
     $user = $this->createUser();
-    $data = ['email_address' => $user->email_address];
+    $data = ['email' => $user->email];
 
     $response = $this->postJson($this->apiBaseUrl . '/auth/forgot-password', $data);
     $response->assertOk();
     $responseJson = json_decode($response->content());
 
     $this->assertEquals('success', $responseJson->status);
-    $this->assertEquals($responseJson->message, 'Reset password link successfully sent to ' . $user->email_address);
+    $this->assertEquals($responseJson->message, 'Reset password link successfully sent to ' . $user->email);
 
     Mail::assertQueued(ForgotPasswordMail::class);
 });
@@ -86,7 +86,7 @@ test('cannot reset password with non existent token', function () {
 
 test('cannot reset password with invalid token', function () {
     $data = [
-        'email_address' => 'invalid@boilerplate.test',
+        'email' => 'invalid@boilerplate.test',
         'token'         => Str::random(60),
     ];
 
@@ -101,15 +101,15 @@ test('cannot reset password with expired token', function () {
     $user = $this->createUser();
     $passwordReset = $this->createPasswordReset();
 
-    $passwordReset->email = $user->email_address;
+    $passwordReset->email = $user->email;
     $passwordReset->created_at = now()->subMinute(70);
     $passwordReset->save();
 
     $data = [
-        'email_address'             => $user->email_address,
+        'email'             => $user->email,
         'token'                     => $passwordReset->token,
-        'new_password'              => $user->email_address,
-        'new_password_confirmation' => $user->email_address,
+        'new_password'              => $user->email,
+        'new_password_confirmation' => $user->email,
     ];
 
     $response = $this->postJson($this->apiBaseUrl . '/auth/reset-password', $data);
@@ -124,15 +124,15 @@ test('can reset password', function () {
     $user = $this->createUser();
     $passwordReset = $this->createPasswordReset();
 
-    $passwordReset->email = $user->email_address;
+    $passwordReset->email = $user->email;
     $passwordReset->created_at = now();
     $passwordReset->save();
 
     $data = [
-        'email_address'             => $user->email_address,
+        'email'             => $user->email,
         'token'                     => $passwordReset->token,
-        'new_password'              => $user->email_address,
-        'new_password_confirmation' => $user->email_address,
+        'new_password'              => $user->email,
+        'new_password_confirmation' => $user->email,
     ];
 
     $response = $this->postJson($this->apiBaseUrl . '/auth/reset-password', $data);

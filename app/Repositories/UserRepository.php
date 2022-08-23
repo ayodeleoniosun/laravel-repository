@@ -27,19 +27,19 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUserByEmailAddress(string $emailAddress): ?User
     {
-        return $this->user->where('email_address', $emailAddress)?->first();
+        return $this->user->where('email', $emailAddress)?->first();
     }
 
     public function getDuplicateUserByPhoneNumber(string $phoneNumber, int $id): ?User
     {
-        return $this->user->where('phone_number', $phoneNumber)->where('id', '<>', $id)->first();
+        return $this->user->where('phone', $phoneNumber)->where('id', '<>', $id)->first();
     }
 
     public function updateProfile(array $data, User $user): User
     {
         $user->first_name = $data['first_name'];
         $user->last_name = $data['last_name'];
-        $user->phone_number = $data['phone_number'];
+        $user->phone = $data['phone'];
         $user->update();
 
         if ($data['state'] || $data['city']) {

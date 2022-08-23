@@ -25,11 +25,11 @@ class UserRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name'    => 'required|string',
-            'last_name'     => 'required|string',
-            'email_address' => 'required|email|unique:users',
-            'password'      => ['required', Password::min(8)->uncompromised()],
-            'phone_number'  => 'required|string|min:10|max:15|unique:users',
+            'first_name' => 'required|string',
+            'last_name'  => 'required|string',
+            'email'      => 'required|email|unique:users',
+            'password'   => ['required', Password::min(8)->uncompromised()],
+            'phone'      => 'required|string|min:10|max:15|unique:users',
         ];
     }
 }

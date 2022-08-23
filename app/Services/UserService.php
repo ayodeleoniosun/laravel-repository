@@ -33,7 +33,7 @@ class UserService implements UserServiceInterface
 
     public function updateProfile(User $user, array $data): UserResource
     {
-        $phoneNumberExist = $this->userRepo->getDuplicateUserByPhoneNumber($data['phone_number'], $user->id);
+        $phoneNumberExist = $this->userRepo->getDuplicateUserByPhoneNumber($data['phone'], $user->id);
 
         if ($phoneNumberExist) {
             throw new CustomException('Phone number belongs to another user', Response::HTTP_FORBIDDEN);
