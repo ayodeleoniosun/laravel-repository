@@ -2,11 +2,6 @@
 
 namespace Tests\Feature\User;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Traits\CreateUsers;
-
-uses(RefreshDatabase::class, CreateUsers::class);
-
 test('cannot register with short password', function () {
     $data = [
         'first_name' => 'firstname',

@@ -2,13 +2,9 @@
 
 namespace Tests\Feature\User;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use Tests\Traits\CreateUsers;
-
-uses(RefreshDatabase::class, CreateUsers::class);
 
 test('cannot send forgot password link to non existent email', function () {
     $data = ['email' => 'invalid@email.com'];

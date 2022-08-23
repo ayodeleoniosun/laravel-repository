@@ -41,7 +41,7 @@ class UserRepository implements UserRepositoryInterface
     {
         $user->update($data);
 
-        if ($data['state'] || $data['city']) {
+        if (isset($data['state']) || isset($data['city'])) {
             $this->updateUserProfile($data, $user);
         }
 
@@ -52,7 +52,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function updateUserProfile(array $data, User $user): User
     {
-        if (! $user->profile) {
+        if (!$user->profile) {
             $user->profile = new UserProfile();
             $user->profile->user_id = $user->id;
         }

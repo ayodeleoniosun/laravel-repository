@@ -23,7 +23,7 @@ class UserService implements UserServiceInterface
     {
         $user = $this->userRepo->getUser($data['slug']);
 
-        if (! $user) {
+        if (!$user) {
             throw new CustomException('User not found', Response::HTTP_NOT_FOUND);
         }
 
@@ -50,10 +50,10 @@ class UserService implements UserServiceInterface
 
     public function updateProfilePicture(User $user, array $data): UserResource
     {
-        $image = (object) $data['image'];
+        $image = (object)$data['image'];
 
         $extension = $image->extension();
-        $filename = $user->id.''.time().'.'.$extension;
+        $filename = $user->id . '' . time() . '.' . $extension;
 
         Storage::disk('profile_pictures')->put($filename, file_get_contents($image->getRealPath()));
 

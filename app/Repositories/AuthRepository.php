@@ -32,9 +32,4 @@ class AuthRepository implements AuthRepositoryInterface
     {
         return $user->createToken('auth_token')->plainTextToken;
     }
-
-    public function updatePassword(array $data, User $user): void
-    {
-        $this->userRepo->updatePassword($data, $user);
-    }
 }
