@@ -17,7 +17,7 @@ interface UserRepositoryInterface
 
     public function updateProfile(array $data, User $user): User;
 
-    public function updateUserProfile(array $data, User $user): User;
+    public function updateUserProfile(array $data, User $user): void;
 
     public function updatePassword(array $data, User $user): void;
 

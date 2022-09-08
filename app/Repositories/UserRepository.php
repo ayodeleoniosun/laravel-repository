@@ -41,7 +41,7 @@ class UserRepository implements UserRepositoryInterface
     {
         $user->update($data);
 
-        if (isset($data['state']) || isset($data['city'])) {
+        if (isset($data['state']) && isset($data['city'])) {
             $this->updateUserProfile($data, $user);
         }
 
@@ -50,18 +50,12 @@ class UserRepository implements UserRepositoryInterface
         return $this->getUser($user->slug);
     }
 
-    public function updateUserProfile(array $data, User $user): User
+    public function updateUserProfile(array $data, User $user): void
     {
-        if (!$user->profile) {
-            $user->profile = new UserProfile();
-            $user->profile->user_id = $user->id;
-        }
-
-        $user->profile->state_id = $data['state'];
-        $user->profile->city_id = $data['city'];
-        $user->profile->id ? $user->profile->update() : $user->profile->save();
-
-        return $user;
+        UserProfile::updateOrCreate(
+            ['user_id' => $user->id],
+            ['state_id' => $data['state'], 'city_id' => $data['city'] ]
+        );
     }
 
     public function getUser(string $slug): ?User
