@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1d43b34b27f4d46cab7c6a407b4309a",
+    "content-hash": "74e7bcbd87ab21ec4ccced1840fdef33",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7119,16 +7119,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "dev-master",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "7c0e8e559cc072e12cd70d436b1b581cf5eee5c4"
+                "reference": "c5e74e5fff18014780361fb33a883af9a9fbd900"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/7c0e8e559cc072e12cd70d436b1b581cf5eee5c4",
-                "reference": "7c0e8e559cc072e12cd70d436b1b581cf5eee5c4",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/c5e74e5fff18014780361fb33a883af9a9fbd900",
+                "reference": "c5e74e5fff18014780361fb33a883af9a9fbd900",
                 "shasum": ""
             },
             "require": {
@@ -7149,7 +7149,6 @@
             "suggest": {
                 "zendframework/zend-diactoros": "When using Laravel >=5.1 - <=6.9 this package can help get more accurate request info, not used on Laravel >=6.10 anymore (https://laravel.com/docs/5.8/requests#psr7-requests)"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -7195,7 +7194,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/master"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/2.13.0"
             },
             "funding": [
                 {
@@ -7207,7 +7206,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-07-15T11:38:54+00:00"
+            "time": "2022-07-15T11:36:23+00:00"
         },
         {
             "name": "symfony/console",
@@ -12566,9 +12565,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "sentry/sentry-laravel": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
